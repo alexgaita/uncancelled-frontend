@@ -5,6 +5,7 @@ import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutli
 import PauseCircleOutlinedIcon from '@mui/icons-material/PauseCircleOutlined'
 import { useParams } from 'react-router-dom'
 import AccordionCustom from './subcomponents/AccordionDetails'
+import { Movie } from '../LandingPage/LandingPage'
 
 const seasons = [
   {
@@ -29,8 +30,21 @@ const seasons = [
   },
 ]
 
+const mockMovie = {
+  id: '1',
+  name: 'Piratii din caraibe',
+  status: 'ongoing',
+  description:
+    'A deadly female assassin comes out of hiding to protect the daughter\n' +
+    '            that she gave up years before, while on the run from dangerous men.',
+  url: '',
+  seasons,
+}
+
 const MovieDetails = () => {
   const params = useParams()
+
+  const [movie, setMovie] = useState<Movie>(mockMovie)
 
   useEffect(() => {
     const getResults = async () => {
@@ -76,6 +90,8 @@ const MovieDetails = () => {
     }
   }
 
+  if (!movie) return null
+
   return (
     <Box
       width="100%"
@@ -99,7 +115,9 @@ const MovieDetails = () => {
         }}
       >
         <img
-          src="https://picsum.photos/300/425"
+          src={movie.url || 'https://picsum.photos/300/425'}
+          width="300px"
+          height="425px"
           alt="123"
           style={{ borderRadius: '15px', marginTop: 10, marginBottom: 10 }}
         />
@@ -113,10 +131,10 @@ const MovieDetails = () => {
           }}
         >
           <Typography fontWeight={700} variant="h3">
-            Movie Name
+            {movie.name}
           </Typography>
           <Typography fontWeight={600} variant="h5" sx={{ pt: 5 }}>
-            Status
+            {movie.status}
           </Typography>
           <Box
             display="flex"
@@ -127,10 +145,7 @@ const MovieDetails = () => {
           <Typography fontWeight={600} variant="h5" sx={{ pt: 5 }}>
             Overview
           </Typography>
-          <Typography>
-            A deadly female assassin comes out of hiding to protect the daughter
-            that she gave up years before, while on the run from dangerous men.
-          </Typography>
+          <Typography>{movie.description || ''}</Typography>
         </Box>
       </Box>
       <Box
@@ -142,7 +157,7 @@ const MovieDetails = () => {
         alignItems="center"
         overflow="auto"
       >
-        {seasons.map((season) => (
+        {movie.seasons?.map((season) => (
           <AccordionCustom
             name={season.name}
             id={season.id}

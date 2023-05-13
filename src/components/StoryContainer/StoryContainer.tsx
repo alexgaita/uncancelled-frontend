@@ -16,11 +16,7 @@ const StoryContainer = () => {
 
     fetchData()
   }, [])
-  return (
-    <Container maxWidth="lg">
-      {storyData ? <Story storyData={storyData} /> : null}
-    </Container>
-  )
+  return storyData ? <Story storyData={storyData} /> : null
 }
 
 export default StoryContainer
