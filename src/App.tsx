@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
+import { Container } from '@mui/material'
 import Story from './components/Story'
 
 function App() {
@@ -16,7 +17,11 @@ function App() {
 
     fetchData()
   }, [])
-  return storyData ? <Story storyData={storyData} /> : null
+  return (
+    <Container maxWidth="lg">
+      {storyData ? <Story storyData={storyData} /> : null}
+    </Container>
+  )
 }
 
 export default App
