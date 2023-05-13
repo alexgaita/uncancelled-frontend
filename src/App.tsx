@@ -1,26 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import './App.css'
-import { Container } from '@mui/material'
-import Story from './components/Story'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Box } from '@mui/material'
+import MovieDetails from './components/MovieDetails/MovieDetails'
+import StoryContainer from './components/StoryContainer/StoryContainer'
 
 function App() {
-  const [storyData, setStoryData] = useState()
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await fetch('https://picsum.photos/v2/list').then((resp) =>
-        resp.json()
-      )
-      console.log(result)
-      setStoryData(result)
-    }
-
-    fetchData()
-  }, [])
   return (
-    <Container maxWidth="lg">
-      {storyData ? <Story storyData={storyData} /> : null}
-    </Container>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Box>Merge</Box>} />
+        <Route path="/:movieId" element={<MovieDetails />} />
+        <Route path="/story/:id" element={<StoryContainer />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
