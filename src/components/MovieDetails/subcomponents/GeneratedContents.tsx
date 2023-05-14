@@ -19,6 +19,8 @@ const GeneratedContents = ({
   description,
   dislike,
 }: IGeneratedContents) => {
+  console.log(avatar, like, description, dislike)
+
   return (
     <Box
       display="flex"
@@ -31,7 +33,7 @@ const GeneratedContents = ({
     >
       <img
         style={{ borderRadius: '5px', height: 120 }}
-        src={`https://www.themoviedb.org/t/p/w260_and_h390_bestv2${avatar}`}
+        src="./img1.jpeg"
         alt="none"
       />
       <Typography width="50%" alignSelf="flex-start" textOverflow="ellipsis">

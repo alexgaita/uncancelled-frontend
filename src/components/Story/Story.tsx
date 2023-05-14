@@ -12,41 +12,38 @@ import './styles.css'
 
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined'
 import ThumbDownOutlinedIcon from '@mui/icons-material/ThumbDownOutlined'
+import { useNavigate } from 'react-router-dom'
 
 type StoryProps = {
   storyData: any
 }
 
 const images = [
-  './../assets/img1.jpeg',
-  './../assets/img2.jpeg',
-  './../assets/img3.jpeg',
-  './../assets/img4.jpeg',
-  './../assets/img6.jpeg',
+  './../assets/img/GameOfThrones/1.png',
+  './../assets/img/GameOfThrones/3.png',
+  './../assets/img/GameOfThrones/4.png',
+  './../assets/img/GameOfThrones/2.png',
 ]
 const videos = [
-  '../../assets/audio/text4.mp3',
-  '../../assets/audio/text4.mp3',
-  '../../assets/audio/text4.mp3',
-  '../../assets/audio/text4.mp3',
-  '../../assets/audio/text4.mp3',
+  './../assets/audio/GameOfThrones/1.mp3',
+  './../assets/audio/GameOfThrones/2.mp3',
+  './../assets/audio/GameOfThrones/3.mp3',
+  './../assets/audio/GameOfThrones/4.mp3',
 ]
 
 const texts = [
-  'Step 3: Open the Airway\n' +
-    "Position the person flat on their back on a hard surface. Kneel next to their neck and shoulders. Place the heel of one hand on the center of the person's chest, and the other hand on top, interlocking your fingers. With your elbows straight, use your body weight to compress the chest at least 2 inches deep, but not more than 2.4 inches. Compress at a rate of 100 to 120 compressions per minute.",
-  'Step 4: Check for Breathing\n' +
-    "After 30 chest compressions, open the person's airway using the head-tilt, chin-lift maneuver. To do this, place one hand on the person's forehead and gently tilt their head back, lifting the chin using two fingers of your other hand under the chin.\n",
-  'Step 5: Give Rescue Breaths\n' +
-    "With the airway open, give rescue breaths by pinching the nostrils shut and covering the person's mouth with yours, making a seal. Blow in for about one second, ensuring that the person's chest rises. Give two rescue breaths and then continue chest compressions.",
-  "With the airway open, give rescue breaths by pinching the nostrils shut and covering the person's mouth with yours, making a seal. Blow in for about one second, ensuring that the person's chest rises. Give two rescue breaths and then continue chest compressions.",
-  "With the airway open, give rescue breaths by pinching the nostrils shut and covering the person's mouth with yours, making a seal. Blow in for about one second, ensuring that the person's chest rises. Give two rescue breaths and then continue chest compressions.",
+  'After Bran was crowned as the King of the Six Kingdoms, peace had finally returned to Westeros. However, it was not meant to last. A new threat emerged from beyond the Wall, a powerful and mysterious force that threatened to destroy everything that the people of Westeros had fought so hard to protect.\n',
+  'Bran, with his powers as the Three-Eyed Raven, saw the danger that was coming and knew that he had to act. He called upon his council and his allies to prepare for war. Among them was Jon Snow, who had been exiled to the Night’s Watch for killing Daenerys Targaryen.\n',
+  'The armies of the Six Kingdoms marched north to face the enemy. The battle was fierce and brutal, with both sides suffering heavy losses. In the end, it was Jon Snow who made the ultimate sacrifice. He gave his life to defeat the enemy and save Westeros from certain destruction.\n',
+  'With the threat vanquished, Bran honored Jon’s memory by naming him a hero of the realm. The people of Westeros mourned his loss but celebrated his bravery. And so, peace returned once again to the land, but at a great cost',
 ]
 const Story = ({ storyData }: StoryProps) => {
   const swiperRef = useRef<any>()
   const audioRef = useRef<any>()
   const [index, setIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const navigate = useNavigate()
 
   console.log(swiperRef ? swiperRef.current : 'no swiper')
 
@@ -117,11 +114,17 @@ const Story = ({ storyData }: StoryProps) => {
             Did you enjoy it?
           </Typography>
           <Box display="grid" gridTemplateColumns="1fr 1fr">
-            <IconButton sx={{ gap: 1, borderRadius: '10px' }}>
+            <IconButton
+              onClick={() => navigate('/')}
+              sx={{ gap: 1, borderRadius: '10px' }}
+            >
               <ThumbUpOutlinedIcon fontSize="large" />
               <Typography>Like</Typography>
             </IconButton>
-            <IconButton sx={{ gap: 1, borderRadius: '10px' }}>
+            <IconButton
+              onClick={() => navigate('/')}
+              sx={{ gap: 1, borderRadius: '10px' }}
+            >
               <ThumbDownOutlinedIcon fontSize="large" />
               <Typography>Dislike</Typography>
             </IconButton>
