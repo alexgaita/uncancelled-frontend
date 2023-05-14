@@ -49,7 +49,7 @@ const AccordionCustom = ({
   id,
   description,
 }: IAccordionDetails) => {
-  const params = useParams()
+  const [scenario, setScenario] = useState<any[]>([])
 
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
@@ -59,10 +59,12 @@ const AccordionCustom = ({
     const getGeneratedContents = async () => {
       const response = await fetch(`http://localhost:4000/scenario/${id}`)
       const responseData = await response.json()
-      console.log(responseData)
+      setScenario(responseData)
     }
     getGeneratedContents()
   }, [])
+
+  if (!scenario) return null
 
   return (
     <>
@@ -101,10 +103,10 @@ const AccordionCustom = ({
         </AccordionSummary>
         <AccordionDetails>
           <Box display="flex" flexDirection="column" width="100%">
-            {generatedContents.map((contents) => (
+            {scenario.map((contents) => (
               <GeneratedContents
                 id={contents.id}
-                description={contents.description || ''}
+                description={contents.storyName}
                 avatar={contents.avatar}
                 like={contents.like}
                 dislike={contents.dislike}
