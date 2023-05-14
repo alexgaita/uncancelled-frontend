@@ -41,22 +41,23 @@ const ModalCustom = ({ isOpen, handleClose, seasonId }: IModalCustom) => {
   const [speakingStyle, setSpeakingStyle] = useState<string>('british man')
 
   const handlePost = () => {
-    fetch('https://localhost:4000/newCreate', {
-      method: 'POST',
-      body: JSON.stringify({
-        seasonId,
-        violence,
-        dramatic,
-        funny,
-        instructional,
-        isPixelArt: pixelArt,
-        language,
-        speakingStyle,
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    })
+    // fetch('https://localhost:4000/newCreate', {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     seasonId,
+    //     violence,
+    //     dramatic,
+    //     funny,
+    //     instructional,
+    //     isPixelArt: pixelArt,
+    //     language,
+    //     speakingStyle,
+    //   }),
+    //   headers: {
+    //     'Content-type': 'application/json; charset=UTF-8',
+    //   },
+    // })
+    handleClose()
   }
 
   return (

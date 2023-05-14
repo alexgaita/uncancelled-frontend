@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, IconButton, Typography } from '@mui/material'
 import ThumbDownOutlinedIcon from '@mui/icons-material/ThumbDownOutlined'
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined'
+import { useNavigate } from 'react-router-dom'
 
 interface IGeneratedContents {
   id: number
@@ -19,6 +20,7 @@ const GeneratedContents = ({
   description,
   dislike,
 }: IGeneratedContents) => {
+  const navigate = useNavigate()
   console.log(avatar, like, description, dislike)
 
   return (
@@ -30,10 +32,11 @@ const GeneratedContents = ({
       minHeight={150}
       maxHeight={150}
       pl={5}
+      // onClick={() => navigate('/story/1')}
     >
       <img
         style={{ borderRadius: '5px', height: 120 }}
-        src="./img1.jpeg"
+        src="./../assets/img/GameOfThrones/1.png"
         alt="none"
       />
       <Typography width="50%" alignSelf="flex-start" textOverflow="ellipsis">
