@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box, Button, Modal, TextField, Typography } from '@mui/material'
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined'
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
 import PauseCircleOutlinedIcon from '@mui/icons-material/PauseCircleOutlined'
@@ -34,6 +34,8 @@ const MovieDetails = () => {
   const params = useParams()
 
   const [movie, setMovie] = useState<Movie | null>(null)
+  const [isClaimModalOpen, setIsClaimModalOpen] = useState(false)
+  const [email, setEmail] = useState('')
 
   useEffect(() => {
     const getResults = async () => {
@@ -131,9 +133,64 @@ const MovieDetails = () => {
             pt: 5,
           }}
         >
-          <Typography fontWeight={700} variant="h3">
-            {movie.name}
-          </Typography>
+          <Box display="flex" gap="30px" alignItems="center">
+            <Typography fontWeight={700} variant="h3">
+              {movie.name}
+            </Typography>
+            <Button
+              variant="outlined"
+              onClick={() => setIsClaimModalOpen(true)}
+              sx={{
+                borderColor: '#8b877b',
+                color: '#8b877b',
+                '&:hover': { borderColor: '#8b877b' },
+              }}
+            >
+              Claim
+            </Button>
+            <Modal
+              open={isClaimModalOpen}
+              onClose={() => setIsClaimModalOpen(false)}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box
+                sx={{
+                  width: '400px',
+                  height: '300px',
+                  backgroundColor: 'white',
+                  position: 'absolute' as const,
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  borderRadius: '20px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  p: 5,
+                  gap: 3,
+                }}
+              >
+                <Typography variant="h5">Claim this series</Typography>
+                <TextField
+                  label="You contact email"
+                  value={email}
+                  onChange={(evt) => setEmail(evt.target.value)}
+                  sx={{ '&:hover': { borderColor: '#8b877b' } }}
+                />
+                <Button
+                  variant="outlined"
+                  onClick={() => setIsClaimModalOpen(true)}
+                  sx={{
+                    borderColor: '#8b877b',
+                    color: '#8b877b',
+                    '&:hover': { borderColor: '#8b877b' },
+                  }}
+                >
+                  Send
+                </Button>
+              </Box>
+            </Modal>
+          </Box>
           <Typography fontWeight={600} variant="h5" sx={{ pt: 5 }}>
             Status
           </Typography>
