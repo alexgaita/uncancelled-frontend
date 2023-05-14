@@ -29,7 +29,11 @@ const GeneratedContents = ({
       maxHeight={150}
       pl={5}
     >
-      <img style={{ borderRadius: '5px' }} src={avatar} alt="none" />
+      <img
+        style={{ borderRadius: '5px', height: 120 }}
+        src={`https://www.themoviedb.org/t/p/w260_and_h390_bestv2${avatar}`}
+        alt="none"
+      />
       <Typography width="50%" alignSelf="flex-start" textOverflow="ellipsis">
         {description}
       </Typography>

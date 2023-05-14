@@ -30,28 +30,22 @@ const seasons = [
   },
 ]
 
-const mockMovie = {
-  id: '1',
-  name: 'Piratii din caraibe',
-  status: 'ongoing',
-  description:
-    'A deadly female assassin comes out of hiding to protect the daughter\n' +
-    '            that she gave up years before, while on the run from dangerous men.',
-  url: '',
-  seasons,
-}
-
 const MovieDetails = () => {
   const params = useParams()
 
-  const [movie, setMovie] = useState<Movie>(mockMovie)
+  const [movie, setMovie] = useState<Movie | null>(null)
 
   useEffect(() => {
     const getResults = async () => {
       const response = await fetch(
         `http://localhost:4000/tvseries/${params.movieId}`
       )
-      console.log(response)
+      const responseData = await response.json()
+      const seasonData = await fetch(
+        `http://localhost:4000/seasons/${params.movieId}`
+      )
+      const seasonsData = await seasonData.json()
+      setMovie({ ...responseData, seasons: seasonsData })
     }
     getResults()
   }, [params.movieId])
@@ -74,6 +68,13 @@ const MovieDetails = () => {
               sx={{ color: 'green', fontSize: 40 }}
             />
             <Typography>Ongoing</Typography>
+          </>
+        )
+      case 'finished':
+        return (
+          <>
+            <CancelOutlinedIcon sx={{ color: 'yellow', fontSize: 40 }} />
+            <Typography>Finished</Typography>
           </>
         )
 
@@ -115,7 +116,7 @@ const MovieDetails = () => {
         }}
       >
         <img
-          src={movie.url || 'https://picsum.photos/300/425'}
+          src={`https://www.themoviedb.org/t/p/w440_and_h660_face${movie.wallpaper}`}
           width="300px"
           height="425px"
           alt="123"
@@ -134,13 +135,13 @@ const MovieDetails = () => {
             {movie.name}
           </Typography>
           <Typography fontWeight={600} variant="h5" sx={{ pt: 5 }}>
-            {movie.status}
+            Status
           </Typography>
           <Box
             display="flex"
             sx={{ gap: 1, alignItems: 'center', fontSize: 50 }}
           >
-            {computeIcon('ongoing')}
+            {computeIcon(movie.status)}
           </Box>
           <Typography fontWeight={600} variant="h5" sx={{ pt: 5 }}>
             Overview
@@ -157,14 +158,19 @@ const MovieDetails = () => {
         alignItems="center"
         overflow="auto"
       >
-        {movie.seasons?.map((season) => (
-          <AccordionCustom
-            name={season.name}
-            id={season.id}
-            isExpanded={expanded === season.id}
-            setIsExpanded={setExpanded}
-          />
-        ))}
+        {movie.seasons
+          ?.sort((movieA, movieB) => {
+            return movieB.seasonNumber - movieA.seasonNumber
+          })
+          .map((season) => (
+            <AccordionCustom
+              name={season.seasonNumber}
+              id={season.id}
+              isExpanded={expanded === season.id}
+              setIsExpanded={setExpanded}
+              description={season.description}
+            />
+          ))}
       </Box>
     </Box>
   )

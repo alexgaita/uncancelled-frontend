@@ -9,6 +9,7 @@ import 'swiper/css'
 import 'swiper/css/effect-fade'
 import { Box, IconButton, Modal, Typography } from '@mui/material'
 import './styles.css'
+
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined'
 import ThumbDownOutlinedIcon from '@mui/icons-material/ThumbDownOutlined'
 
@@ -45,7 +46,7 @@ const Story = ({ storyData }: StoryProps) => {
   const swiperRef = useRef<any>()
   const audioRef = useRef<any>()
   const [index, setIndex] = useState(0)
-  const [isModalOpen, setIsModalOpen] = useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   console.log(swiperRef ? swiperRef.current : 'no swiper')
 
@@ -84,6 +85,13 @@ const Story = ({ storyData }: StoryProps) => {
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
+      sx={{
+        backgroundImage: 'url(./../book.jpg)',
+        objectFit: 'cover',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        height: '100vh',
+      }}
       gap={2}
       pt={5}
     >
@@ -92,7 +100,6 @@ const Story = ({ storyData }: StoryProps) => {
           sx={{
             width: '30%',
             height: '20%',
-            backgroundColor: 'white',
             position: 'absolute' as const,
             top: '50%',
             left: '50%',
@@ -101,6 +108,7 @@ const Story = ({ storyData }: StoryProps) => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            background: 'white',
             gap: 4,
             p: 2,
           }}
@@ -144,7 +152,7 @@ const Story = ({ storyData }: StoryProps) => {
             )
           })}
         </Swiper>
-        <Box pr={5} display="flex" alignItems="center">
+        <Box pl={6} pr={5} display="flex" alignItems="flex-start" width="90%">
           <Typography fontWeight={500} fontSize="25px">
             {texts[index]}
           </Typography>
@@ -160,10 +168,11 @@ const Story = ({ storyData }: StoryProps) => {
             style={{
               position: audioIsVisible(vIndex) ? 'relative' : 'absolute',
               visibility: audioIsVisible(vIndex) ? 'visible' : 'hidden',
+              marginTop: 40,
             }}
             onEnded={() => {
               if (vIndex === index) {
-                swiperRef.current.slideTo(index + 1, 3000)
+                swiperRef.current.slideTo(index + 1, 1500)
                 setIndex(index + 1)
               }
             }}
@@ -173,6 +182,7 @@ const Story = ({ storyData }: StoryProps) => {
           </audio>
         )
       })}
+      {isModalOpen && <Box width={100} height={100} />}
     </Box>
   )
 }

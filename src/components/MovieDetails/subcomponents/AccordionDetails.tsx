@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
   Box,
+  Grid,
   IconButton,
   Typography,
 } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
+import { useParams } from 'react-router-dom'
 import GeneratedContents from './GeneratedContents'
 import ModalCustom from './ModalCustom'
 
@@ -17,12 +19,13 @@ interface IAccordionDetails {
   id: number
 
   name: string
+  description: string
 }
 
 const generatedContents = [
   {
     id: 1,
-    avatar: 'https://i.pravatar.cc/100',
+    avatar: '/aUQKIpZZ31KWbpdHMCmaV76u78T.jpg',
     like: 20,
     description:
       'There were other things in the stocking, nuts and oranges and a toy\n' +
@@ -44,10 +47,22 @@ const AccordionCustom = ({
   setIsExpanded,
   isExpanded,
   id,
+  description,
 }: IAccordionDetails) => {
+  const params = useParams()
+
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+
+  useEffect(() => {
+    const getGeneratedContents = async () => {
+      const response = await fetch(`http://localhost:4000/scenario/${id}`)
+      const responseData = await response.json()
+      console.log(responseData)
+    }
+    getGeneratedContents()
+  }, [])
 
   return (
     <>
@@ -59,20 +74,20 @@ const AccordionCustom = ({
         onChange={() => setIsExpanded(id)}
       >
         <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
-          <Box
-            display="flex"
-            sx={{ justifyContent: 'space-between', alignItems: 'center' }}
+          <Grid
+            container
+            sx={{
+              alignItems: 'center',
+            }}
             width="100%"
           >
-            <Typography>{name}</Typography>
-            <Box display="flex" flexGrow={1} pl={10} overflow="clip">
-              <Typography noWrap>
-                Bored with being the Lord of Hell, the devil relocates to Los
-                Angeles, where he opens a nightclub and forms a connection with
-                a homicide detective.
-              </Typography>
-            </Box>
-            <Box>
+            <Grid item xs={1}>
+              <Typography>S0{name}</Typography>
+            </Grid>
+            <Grid item xs={10} overflow="hidden">
+              <Typography noWrap>{description.slice(0, 100)}</Typography>
+            </Grid>
+            <Grid item xs={1} justifySelf="flex-end" pl={5}>
               <IconButton
                 onClick={(event) => {
                   event.stopPropagation()
@@ -81,8 +96,8 @@ const AccordionCustom = ({
               >
                 <AddIcon />
               </IconButton>
-            </Box>
-          </Box>
+            </Grid>
+          </Grid>
         </AccordionSummary>
         <AccordionDetails>
           <Box display="flex" flexDirection="column" width="100%">
